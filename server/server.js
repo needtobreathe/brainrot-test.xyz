@@ -1,8 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
-const { kv } = require('@vercel/kv'); // Optional persistence for Vercel
+import express from 'express';
+import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { kv } from '@vercel/kv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,16 +31,19 @@ const getDB = async (key, defaultVal) => {
   }
   
   // 2. Fallback to Local JSON File (if not in serverless environment)
-  // In serverless (Vercel), fs write is ephemeral, but read is okay if file exists.
-  // However, we want persistence. If KV is missing in Vercel, we use memory.
-  
   if (process.env.VERCEL) {
-    // In-memory fallback for Vercel without KV (Warn user)
+    // In-memory fallback for Vercel without KV
     if (!global.memeDb) global.memeDb = {};
     return global.memeDb[key] || defaultVal;
   }
 
   // 3. Local Development (fs)
+  // Ensure directory exists
+  const dbDir = path.dirname(USERS_DB);
+  if (!fs.existsSync(dbDir)) {
+      fs.mkdirSync(dbDir, { recursive: true });
+  }
+
   const filePath = key === 'users' ? USERS_DB : VISITORS_DB;
   if (fs.existsSync(filePath)) {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -149,4 +156,4 @@ if (!process.env.VERCEL) {
 }
 
 // Export for Vercel
-module.exports = app;
+export default app;
