@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+@theme {
+  --font-family-sans: 'Outfit', 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* Custom utilities using standard CSS */
+body {
+  background-color: #0a0a0f;
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-family-sans);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3);
+}
+
+.box-glow {
+  box-shadow: 0 0 50px rgba(168, 85, 247, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.box-glow-success {
+  box-shadow: 0 0 50px rgba(34, 197, 94, 0.4), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.box-glow-error {
+  box-shadow: 0 0 50px rgba(239, 68, 68, 0.4), 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Gradient animation */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse glow */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
