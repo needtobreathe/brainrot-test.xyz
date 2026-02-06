@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 
 const stats = ref({ uniqueVisitors: 0, totalUsers: 0 });
 const leaderboard = ref([]);

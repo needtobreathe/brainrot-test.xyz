@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import charactersData from '../data/characters.json';
 
 const router = useRouter();
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 
 const parsePopularity = (popStr) => {
   if (!popStr) return 0;
